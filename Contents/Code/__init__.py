@@ -138,7 +138,7 @@ def CreateVideoClipObject(url, title, thumb, container = False):
     return vco
 
 def GetVideoURL(url, live = True):
-    if url.startswith('rtmp') and Prefs['rtmp']:
+    if url.startswith('rtmp'):
         Log.Debug('*' * 80)
         Log.Debug('* url before processing: %s' % url)
         #if url.find(' ') > -1:

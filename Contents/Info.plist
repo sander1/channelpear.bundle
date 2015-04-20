@@ -9,8 +9,8 @@
 	<key>PlexFrameworkVersion</key>
 	<string>2</string>
 	<key>PlexFrameworkFlags</key>
-    <array>
-        <!--<string>UseRealRTMP</string>-->
-    </array>
+	<array>
+		<string>UseRealRTMP</string>
+	</array>
 </dict>
 </plist>

@@ -16,11 +16,5 @@
         "label":    "Sort streams by name",
         "type":     "bool",
         "default":  "true"
-    },
-    {
-        "id":       "rtmp",
-        "label":    "Use Real RTMP",
-        "type":     "bool",
-        "default":  "false"
     }
 ]
