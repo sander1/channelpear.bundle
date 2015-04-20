@@ -12,8 +12,8 @@
 
 TITLE = 'channel PEAR'
 PREFIX = '/video/channelpear'
-#ICON = 'icon-default.jpg'
-#ART = 'art-default.jpg'
+ICON = 'icon-default.jpg'
+ART = 'art-default.jpg'
 
 def Start():
     ObjectContainer.title1 = TITLE
@@ -22,7 +22,7 @@ def Start():
     DirectoryObject.art = R('art-default.jpg')
     VideoClipObject.art = R('art-default.jpg')
 
-@handler(PREFIX, TITLE)
+@handler(PREFIX, TITLE, art=ART, thumb=ICON)
 def MainMenu():
     empty_group = False
     groups_list = []
