@@ -27,40 +27,41 @@ def MainMenu():
     empty_group = False
     groups_list = []
     items_dict = {} # using dictionary because Plex sometimes has issues when passing list to a procedure
-    if Prefs['playlist'].startswith('http://') or Prefs['playlist'].startswith('https://'):
-        playlist = HTTP.Request(Prefs['playlist']).content
-    else:
-        playlist = Resource.Load(Prefs['playlist'], binary = True)
-    if playlist <> None:
-        lines = playlist.splitlines()
-        count = 0
-        for i in range(len(lines) - 1):
-            line = lines[i].strip()
-            if line.startswith('#EXTINF'):
-                url = lines[i + 1].strip()
-                title = line[line.rfind(',') + 1:len(line)].strip()
-                thumb = GetAttribute(line, 'tvg-logo')
-                group = GetAttribute(line, 'group-title')
-                if group == '':
-                    empty_group = True
-                    group = 'No Category'
-                elif not group in groups_list:
-                    groups_list.append(group)
-                count = count + 1
-                items_dict[count] = {'url': url, 'title': title, 'thumb': thumb, 'group': group, 'order': count}
-                i = i + 1 # skip the url line fot next cycle
-        if Prefs['sort_groups']:
-            groups_list.sort(key = lambda s: s.lower())
-        #if Prefs['sort_lists']:
-        #    items_dict = OrderedDict(sorted(items_dict.items(), key = lambda d: d[1]['title']))
-        #else:
-        #    items_dict = OrderedDict(sorted(items_dict.items(), key = lambda d: d[1]['order']))
-        # OrderedDict passes to other procedures unordered and required reordering, no need for this
-        groups_list.insert(0, 'All')
-        if empty_group:
-            groups_list.append('No Category')
+    if Prefs['playlist']:
+        if Prefs['playlist'].startswith('http://') or Prefs['playlist'].startswith('https://'):
+            playlist = HTTP.Request(Prefs['playlist']).content
+        else:
+            playlist = Resource.Load(Prefs['playlist'], binary = True)
+        if playlist <> None:
+            lines = playlist.splitlines()
+            count = 0
+            for i in range(len(lines) - 1):
+                line = lines[i].strip()
+                if line.startswith('#EXTINF'):
+                    url = lines[i + 1].strip()
+                    title = line[line.rfind(',') + 1:len(line)].strip()
+                    thumb = GetAttribute(line, 'tvg-logo')
+                    group = GetAttribute(line, 'group-title')
+                    if group == '':
+                        empty_group = True
+                        group = 'No Category'
+                    elif not group in groups_list:
+                        groups_list.append(group)
+                    count = count + 1
+                    items_dict[count] = {'url': url, 'title': title, 'thumb': thumb, 'group': group, 'order': count}
+                    i = i + 1 # skip the url line fot next cycle
+            if Prefs['sort_groups']:
+                groups_list.sort(key = lambda s: s.lower())
+            #if Prefs['sort_lists']:
+            #    items_dict = OrderedDict(sorted(items_dict.items(), key = lambda d: d[1]['title']))
+            #else:
+            #    items_dict = OrderedDict(sorted(items_dict.items(), key = lambda d: d[1]['order']))
+            # OrderedDict passes to other procedures unordered and required reordering, no need for this
+            groups_list.insert(0, 'All')
+            if empty_group:
+                groups_list.append('No Category')
 
-    oc = ObjectContainer()
+    oc = ObjectContainer(no_cache=True)
     for group in groups_list:
         oc.add(DirectoryObject(
             key = Callback(ListItems, items_dict = items_dict, group = group),
