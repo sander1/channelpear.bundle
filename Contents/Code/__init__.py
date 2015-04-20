@@ -12,13 +12,13 @@
 
 TITLE = 'channel PEAR'
 PREFIX = '/video/channelpear'
-#ICON = 'icon-default.png'
+#ICON = 'icon-default.jpg'
 #ART = 'art-default.jpg'
 
 def Start():
     ObjectContainer.title1 = TITLE
     ObjectContainer.art = R('art-default.jpg')
-    DirectoryObject.thumb = R('icon-folder.png')
+    DirectoryObject.thumb = R('icon-folder.jpg')
     DirectoryObject.art = R('art-default.jpg')
     VideoClipObject.art = R('art-default.jpg')
 
@@ -67,7 +67,7 @@ def MainMenu():
             key = Callback(ListItems, items_dict = items_dict, group = group),
             title = group
         ))
-    oc.add(PrefsObject(title = L('Preferences'), thumb = R('icon-prefs.png')))
+    oc.add(PrefsObject(title = L('Preferences'), thumb = R('icon-prefs.jpg')))
     return oc
 
 @route(PREFIX + '/listitems', items_dict = dict)
@@ -167,7 +167,7 @@ def GetThumb(thumb):
     elif thumb and thumb <> '':
         return R(thumb)
     else:
-        return R('icon-default.png')
+        return R('icon-default.jpg')
 
 def GetAttribute(text, attribute, delimiter1 = '="', delimiter2 = '"'):
     x = text.find(attribute)
